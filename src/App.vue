@@ -1,16 +1,18 @@
 <template>
-<div>Need For Drive, Iteration 1</div>
+<StartScreen></StartScreen>
 </template>
 
 <script>
+import StartScreen from "./components/StartScreen";
 
 export default {
   name: 'App',
   components: {
+    StartScreen
   }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+@import "./scss/reset";
 </style>
