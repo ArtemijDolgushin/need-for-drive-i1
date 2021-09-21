@@ -1,0 +1,40 @@
+@use "sass:color";
+@use "sass:list";
+
+@function get-gradient($gradient-colors, $color-scale-lightness: +0%) {
+  $first-color: color.scale(list.nth($gradient-colors, 1), $lightness: $color-scale-lightness);
+  $second-color: color.scale(list.nth($gradient-colors, 2), $lightness: $color-scale-lightness);
+  @return linear-gradient(90deg, $first-color 0%, $second-color 100%);
+}
+
+@mixin roboto-text($font-weight, $font-size, $color) {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: $font-size;
+  color: $color;
+}
+
+@mixin button($gradient-colors) {
+  @include roboto-text(500, 18px, $white);
+  padding: 15px 50px 11px 50px;
+  background: get-gradient($gradient-colors);
+  background-blend-mode: darken;
+  border-radius: 8px;
+  border-width: 0;
+  text-align: center;
+  user-select: none;
+
+  &:hover {
+    background: get-gradient($gradient-colors, -10%);
+  }
+  &:active {
+    background: get-gradient($gradient-colors, -20%);
+  }
+  &:disabled {
+    background: $gray-light;
+  }
+  &:focus {
+    background: $black;
+  }
+}
