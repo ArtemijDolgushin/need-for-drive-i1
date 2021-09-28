@@ -3,11 +3,13 @@
 
     <header>
       <span class="promo__logo">Need for drive</span>
-      <img
-          class="promo__map-image"
-          src="../images/marker.svg"
-      >
-      <span class="promo__map-text">
+
+      <span class="promo__map">
+        <img
+            class="promo__map-image"
+            src="../images/marker.svg"
+            alt="map marker"
+        >
         Ульяновск
       </span>
     </header>
@@ -36,15 +38,19 @@ export default {
 @import "../scss/fonts";
 @import "../scss/mixins";
 
+
 .promo {
   display: inline-flex;
   padding: 32px 64px 32px 64px;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
 
   header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 
   &__logo {
@@ -52,14 +58,13 @@ export default {
 
   }
 
-  &__map-image {
-    margin-left: 275px;
-  }
-
-  &__map-text {
-    margin-left: 8px;
+  &__map {
     @include roboto-text(400, 14px, $gray);
 
+  }
+
+  &__map-image {
+    margin-left: 275px;
   }
 
 
@@ -91,6 +96,7 @@ export default {
 
   footer {
     display: flex;
+    justify-content: space-between;
   }
 
   &__copyright {
