@@ -1,7 +1,7 @@
 <template>
   <div class="carousel">
 
-    <div class="carousel__arrow">
+    <div class="carousel__arrow-left">
       <img
           src="../images/arrow-left.svg"
           alt="arrow left"
@@ -15,7 +15,7 @@
       <button class="carousel__button_green">Подробнее</button>
     </main>
 
-    <div class="carousel__arrow">
+    <div class="carousel__arrow-right">
       <img
           src="../images/arrow-right.svg"
           alt="arrow right"
@@ -39,8 +39,8 @@ export default {
 .carousel {
   display: inline-flex;
   justify-content: space-between;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-free-parking.png) no-repeat;
   mix-blend-mode: normal;
+  width: 100%;
 
 
   &__arrow {
@@ -49,6 +49,16 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+
+    &-left {
+      position: absolute;
+      left: 0;
+    }
+
+    &-right {
+      position: absolute;
+      right: 0;
+    }
 
     &:hover {
       background: rgba(14, 194, 97, 0.2);
@@ -60,23 +70,67 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-top: 200px;
     padding: 0 32px 0 32px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-free-parking.png) no-repeat;
+
   }
 
   &__title {
     @include roboto-text(500, 40px, $white);
+    white-space: normal;
   }
 
   &__caption {
     @include roboto-text(300, 24px, $gray);
     margin-top: 8px;
+    white-space: normal;
   }
 
   &__button_green {
     @include button($green-gradient-colors);
     margin-top: 32px;
+    white-space: normal;
   }
 
+}
+
+@media screen and (min-width: 1440px) {
+
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .carousel {
+
+    &__arrow {
+      padding: 0 12px 0 12px;
+    }
+
+    &__title {
+      @include roboto-text(500, 32px, $white);
+      white-space: normal;
+    }
+
+    &__caption {
+      @include roboto-text(300, 22px, $gray);
+      white-space: normal;
+    }
+
+    &__button_green {
+      @include button($green-gradient-colors);
+    }
+
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .carousel {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .carousel {
+    display: none;
+  }
 }
 </style>
