@@ -1,14 +1,11 @@
 <template>
   <section
       class="start-screen"
-      :style="sidebarMenuActive ? { background: 'rgb(0,0,0)', 'justify-content': 'space-between' } : {}"
   >
     <the-sidebar @toggle-menu="sidebarMenuActive = !sidebarMenuActive"></the-sidebar>
-    <the-menu
-        :style="sidebarMenuActive ? { } : { opacity:'0', transform: 'translate(-110%)', width:'0', padding:'0'}"
-    />
-    <the-promo :style="sidebarMenuActive ? {visibility: 'hidden'} : {}"/>
-    <the-carousel :style="sidebarMenuActive ? { } : { }"/>
+    <the-menu :sidebarMenuActive="sidebarMenuActive"/>
+    <the-promo/>
+    <the-carousel/>
   </section>
 </template>
 

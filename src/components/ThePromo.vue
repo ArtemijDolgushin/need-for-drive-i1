@@ -1,6 +1,5 @@
 <template>
   <div class="promo">
-
     <header>
       <span class="promo__logo">Need for drive</span>
 
@@ -41,11 +40,11 @@ export default {
 
 .promo {
   display: inline-flex;
-  padding: 32px 64px 32px 64px;
+  padding: 32px;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 573px;
   width: 100%;
-  overflow: hidden;
 
   header {
     display: flex;
@@ -60,11 +59,12 @@ export default {
 
   &__map {
     @include roboto-text(400, 14px, $gray);
-
+    display: inline-flex;
+    align-items: center;
   }
 
   &__map-image {
-    margin-left: 275px;
+    margin-right: 9px;
   }
 
 
@@ -105,7 +105,22 @@ export default {
 
   &__phone-number {
     @include roboto-text(400, 13px, $black);
-    margin-left: 284px;
   }
+}
+
+@media screen and (min-width: 1440px) {
+  .promo {
+    padding: 32px 64px 32px 64px;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
 }
 </style>
