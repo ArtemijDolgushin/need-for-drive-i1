@@ -8,6 +8,7 @@
 }
 
 @mixin roboto-text($font-weight, $font-size, $color) {
+  white-space: nowrap;
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: $font-weight;
