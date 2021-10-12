@@ -86,10 +86,11 @@ export default {
     opacity: 0.9;
     right: 0;
     transition: opacity 1s;
+    z-index: 1;
 
     &-disabled {
       opacity: 0;
-      z-index: -10;
+      z-index: -1;
     }
   }
 
@@ -104,15 +105,14 @@ export default {
     top: 0;
     bottom: 0;
     left: 64px;
-    right: calc(100vw - 683px - 64px);
+    right: calc(100vw - 800px);
     overflow: hidden;
     transition: transform 1s, opacity 1s;
-    z-index: 100;
+    z-index: 2;
 
     &-disabled {
       transform: translate(-110%);
       opacity: 0;
-      z-index: -10;
     }
   }
 
@@ -150,10 +150,5 @@ export default {
 }
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .menu {
-    &__content {
-      right: 0;
-    }
-  }
 }
 </style>

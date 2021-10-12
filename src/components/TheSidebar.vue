@@ -18,6 +18,7 @@
     >
     <span
         class="sidebar__language"
+        :style="sidebarMenuActive ? { display: 'none' } : {}"
         @click="changeLanguage"
     >{{ languages[selectedLanguageIndex] }}</span>
   </div>
