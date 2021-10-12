@@ -1,21 +1,26 @@
 <template>
   <div class="carousel">
 
-    <div class="carousel__arrow-left">
+    <div class="carousel__arrow carousel__arrow_left">
       <img
           src="../images/arrow-left.svg"
           alt="arrow left"
       >
     </div>
-
-    <main>
-      <span class="carousel__title">Бесплатная парковка</span>
-      <span class="carousel__caption">Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая
-        ПДД, а также в аэропортах.</span>
-      <button class="carousel__button_green">Подробнее</button>
+    <main :class="currentSlider.class">
+      <div class="carousel__content">
+        <span class="carousel__title">{{ currentSlider.titleText }}</span>
+        <span class="carousel__caption">{{ currentSlider.captionText }}</span>
+        <button
+            class="carousel__button"
+            :class="currentSlider.buttonClass"
+        >Подробнее
+        </button>
+      </div>
     </main>
 
-    <div class="carousel__arrow-right">
+
+    <div class="carousel__arrow carousel__arrow_right">
       <img
           src="../images/arrow-right.svg"
           alt="arrow right"
@@ -27,7 +32,28 @@
 
 <script>
 export default {
-  name: "TheCarousel"
+  name: "TheCarousel",
+  data() {
+    return {
+      sliders: [{
+        class: "slider-free-parking",
+        titleText: "Бесплатная парковка",
+        captionText: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
+        buttonClass: "button_green"
+      }, {
+        class: "slider-insurance",
+        titleText: "Страховка",
+        captionText: "Полная страховка автомобиля.",
+        buttonClass: "button_blue"
+      }],
+      currentSliderIndex: 1
+    }
+  },
+  computed: {
+    currentSlider() {
+      return this.sliders[this.currentSliderIndex];
+    }
+  }
 }
 </script>
 
@@ -41,38 +67,51 @@ export default {
   justify-content: space-between;
   mix-blend-mode: normal;
   width: 100%;
+  position: relative;
 
 
   &__arrow {
     padding: 0 28px 0 28px;
+    width: 8px;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-
-    &-left {
-      position: absolute;
-      left: 0;
-    }
-
-    &-right {
-      position: absolute;
-      right: 0;
-    }
 
     &:hover {
       background: rgba(14, 194, 97, 0.2);
     }
   }
 
+  &__arrow_left {
+    position: absolute;
+    left: 0;
+  }
+
+  &__arrow_right {
+    position: absolute;
+    right: 0;
+  }
+
 
   main {
+    width: 100%;
+    background-size: cover;
+  }
+
+  .slider-free-parking {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-free-parking.png);
+  }
+
+  .slider-insurance {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-insurance.png);
+  }
+
+  &__content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 32px 0 32px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-free-parking.png) no-repeat;
-
+    padding: 237px 100px 0 100px;
   }
 
   &__title {
@@ -86,10 +125,17 @@ export default {
     white-space: normal;
   }
 
-  &__button_green {
-    @include button($green-gradient-colors);
+  &__button {
     margin-top: 32px;
     white-space: normal;
+  }
+
+  .button_green {
+    @include button($green-gradient-colors);
+  }
+
+  .button_blue {
+    @include button($blue-gradient-colors);
   }
 
 }
@@ -105,6 +151,13 @@ export default {
       padding: 0 12px 0 12px;
     }
 
+    &__content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 237px 64px 0 64px;
+    }
+
     &__title {
       @include roboto-text(500, 32px, $white);
       white-space: normal;
@@ -113,10 +166,6 @@ export default {
     &__caption {
       @include roboto-text(300, 22px, $gray);
       white-space: normal;
-    }
-
-    &__button_green {
-      @include button($green-gradient-colors);
     }
 
   }
