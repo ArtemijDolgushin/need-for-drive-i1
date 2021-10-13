@@ -12,7 +12,7 @@
 <script>
 import TheSidebar from "./TheSidebar";
 import ThePromo from "./ThePromo";
-import TheMenu from "../../../need-for-drive-i1/src/components/TheMenu";
+import TheMenu from "./TheMenu";
 import TheCarousel from "./TheCarousel";
 
 export default {

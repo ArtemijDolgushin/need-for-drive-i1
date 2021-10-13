@@ -86,7 +86,7 @@ export default {
     opacity: 0.9;
     right: 0;
     transition: opacity 1s;
-    z-index: 10;
+    z-index: 3;
 
     &-disabled {
       opacity: 0;
@@ -108,7 +108,7 @@ export default {
     right: calc(100vw - 800px);
     overflow: hidden;
     transition: transform 1s, opacity 1s;
-    z-index: 11;
+    z-index: 4;
 
     &-disabled {
       transform: translate(-110%);
@@ -127,7 +127,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      filter: brightness(0) saturate(100%) invert(49%) sepia(97%) saturate(1088%) hue-rotate(107deg) brightness(97%) contrast(89%);
+      filter: $green-filter;
     }
   }
 }
@@ -136,18 +136,15 @@ export default {
 
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
 
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
   .menu {
     ul {
       li {
         @include roboto-text(500, 28px, $white);
-        margin-bottom: 29px;
-        cursor: pointer;
-        display: inline;
 
         &:hover {
           @include roboto-text(500, 28px, $main-accent);
@@ -162,20 +159,29 @@ export default {
 
 }
 
-@media screen and (min-width: 0) and (max-width: 767px) {
+@media screen and (min-width: 0) and (max-width: 768px) {
   .menu {
     ul {
       li {
         @include roboto-text(500, 22px, $white);
-        margin-bottom: 29px;
-        cursor: pointer;
-        display: inline;
 
         &:hover {
           @include roboto-text(500, 22px, $main-accent);
         }
       }
     }
+
+    &__overlay {
+      left: 0;
+    }
+
+    &__content {
+      justify-content: normal;
+      padding: 80px 0 0 28px;
+      left: 0;
+      right: 0;
+    }
+
   }
 }
 </style>

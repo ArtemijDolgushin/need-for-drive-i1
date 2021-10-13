@@ -113,23 +113,21 @@ export default {
   }
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
 
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
 }
 
-@media screen and (min-width: 0) and (max-width: 767px) {
+@media screen and (min-width: 0) and (max-width: 768px) {
   .promo {
     padding: 0;
     min-width: 0;
 
     header {
-      display: flex;
       flex-direction: column;
       align-items: flex-end;
-      justify-content: space-between;
       padding: 16px 16px 0 0;
     }
 
@@ -139,20 +137,11 @@ export default {
     }
 
     &__map {
-      @include roboto-text(400, 14px, $gray);
-      display: inline-flex;
-      align-items: center;
       margin-top: 5px;
     }
 
     &__map-image {
       margin-right: 9px;
-    }
-
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
     }
 
     &__title {
@@ -163,14 +152,12 @@ export default {
 
     &__logo_big {
       @include roboto-text(700, 32px, $main-accent);
-      margin-top: 4px;
       white-space: normal;
       padding-left: 16px;
     }
 
     &__caption {
       @include roboto-text(300, 18px, $gray);
-      margin-top: 16px;
       white-space: normal;
       padding-left: 16px;
     }
@@ -179,7 +166,22 @@ export default {
       @include button($main-gradient-colors);
       border-radius: 0;
       align-self: stretch;
-      margin-top: 60px;
+    }
+
+    footer {
+      padding: 16px;
+      flex-direction: column-reverse;
+      background-color: $black;
+      align-items: flex-end;
+    }
+
+    &__copyright {
+      @include roboto-text(400, 13px, $main-accent);
+      margin-top: 8px;
+    }
+
+    &__phone-number {
+      @include roboto-text(400, 13px, $gray-light);
     }
   }
 }
