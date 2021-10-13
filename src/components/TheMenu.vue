@@ -86,11 +86,11 @@ export default {
     opacity: 0.9;
     right: 0;
     transition: opacity 1s;
-    z-index: 1;
+    z-index: 10;
 
     &-disabled {
       opacity: 0;
-      z-index: -1;
+      z-index: -10;
     }
   }
 
@@ -108,7 +108,7 @@ export default {
     right: calc(100vw - 800px);
     overflow: hidden;
     transition: transform 1s, opacity 1s;
-    z-index: 2;
+    z-index: 11;
 
     &-disabled {
       transform: translate(-110%);
@@ -142,6 +142,19 @@ export default {
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .menu {
+    ul {
+      li {
+        @include roboto-text(500, 28px, $white);
+        margin-bottom: 29px;
+        cursor: pointer;
+        display: inline;
+
+        &:hover {
+          @include roboto-text(500, 28px, $main-accent);
+        }
+      }
+    }
+
     &__content {
       right: 0;
     }
@@ -149,6 +162,20 @@ export default {
 
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
+@media screen and (min-width: 0) and (max-width: 767px) {
+  .menu {
+    ul {
+      li {
+        @include roboto-text(500, 22px, $white);
+        margin-bottom: 29px;
+        cursor: pointer;
+        display: inline;
+
+        &:hover {
+          @include roboto-text(500, 22px, $main-accent);
+        }
+      }
+    }
+  }
 }
 </style>

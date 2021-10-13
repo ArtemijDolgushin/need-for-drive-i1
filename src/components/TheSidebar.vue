@@ -10,15 +10,15 @@
         @click="toggleMenu"
     >
     <img
-        class="sidebar__menu"
-        src="../../../need-for-drive-i1/src/images/menu_btn_back.svg"
+        class="sidebar__menu_close"
+        src="../images/menu_btn_back.svg"
         alt="close menu button"
         :style="sidebarMenuActive ? {} : { display: 'none' }"
         @click="toggleMenu"
     >
     <span
         class="sidebar__language"
-        :style="sidebarMenuActive ? { display: 'none' } : {}"
+        :class="{'sidebar__language_menu-is-active': sidebarMenuActive}"
         @click="changeLanguage"
     >{{ languages[selectedLanguageIndex] }}</span>
   </div>
@@ -68,6 +68,13 @@ export default {
     width: 32px;
     height: 32px;
     cursor: pointer;
+
+    &_close{
+      margin: 32px 16px 0 16px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+    }
   }
 
   &__language {
@@ -91,6 +98,111 @@ export default {
       margin-bottom: 14px;
     }
 
+    &_menu-is-active {
+      display: none;
+    }
+
+  }
+}
+
+
+@media screen and (min-width: 1440px) {
+
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .sidebar {
+    background-color: $black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &__menu {
+      margin: 32px 22px 0 22px;
+      transform: scale(calc(42 / 32), 1);
+      height: 32px;
+      cursor: pointer;
+
+
+      &_close{
+        margin: 32px 16px 0 16px;
+        width: 43px;
+        height: 32px;
+        cursor: pointer;
+      }
+    }
+
+    &__language {
+      @include roboto-text(700, 13px, $main-accent);
+      cursor: pointer;
+      user-select: none;
+      padding: 17px 13px 17px 13px;
+      margin-bottom: 15px;
+
+      &:hover {
+        @include roboto-text(700, 13px, $white);
+        border-radius: 100%;
+        border: 1px solid $white;
+        margin-bottom: 14px;
+      }
+
+      &:active {
+        @include roboto-text(700, 13px, $main-accent);
+        border-radius: 100%;
+        border: 1px solid $white;
+        margin-bottom: 14px;
+      }
+
+    }
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 767px) {
+  .sidebar {
+    background-color: $black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    &__menu {
+      margin: 32px 16px 0 16px;
+      transform: scale(calc(42 / 32), 1);
+      height: 32px;
+      cursor: pointer;
+    }
+
+    &__language {
+      @include roboto-text(700, 13px, $main-accent);
+      cursor: pointer;
+      user-select: none;
+      padding: 17px 13px 17px 13px;
+      margin-bottom: 15px;
+      display: none;
+
+      &:hover {
+        @include roboto-text(700, 13px, $white);
+        border-radius: 100%;
+        border: 1px solid $white;
+        margin-bottom: 14px;
+      }
+
+      &:active {
+        @include roboto-text(700, 13px, $main-accent);
+        border-radius: 100%;
+        border: 1px solid $white;
+        margin-bottom: 14px;
+      }
+
+      &_menu-is-active {
+        display: block;
+      }
+    }
   }
 }
 

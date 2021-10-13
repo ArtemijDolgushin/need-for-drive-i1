@@ -54,7 +54,6 @@ export default {
 
   &__logo {
     @include roboto-text(700, 30px, $main-accent);
-
   }
 
   &__map {
@@ -121,6 +120,67 @@ export default {
 @media screen and (min-width: 768px) and (max-width: 1023px) {
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
+@media screen and (min-width: 0) and (max-width: 767px) {
+  .promo {
+    padding: 0;
+    min-width: 0;
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 16px 16px 0 0;
+    }
+
+    &__logo {
+      @include roboto-text(700, 30px, $main-accent);
+      white-space: normal;
+    }
+
+    &__map {
+      @include roboto-text(400, 14px, $gray);
+      display: inline-flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    &__map-image {
+      margin-right: 9px;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__title {
+      @include roboto-text(700, 32px, $black);
+      white-space: normal;
+      padding-left: 16px;
+    }
+
+    &__logo_big {
+      @include roboto-text(700, 32px, $main-accent);
+      margin-top: 4px;
+      white-space: normal;
+      padding-left: 16px;
+    }
+
+    &__caption {
+      @include roboto-text(300, 18px, $gray);
+      margin-top: 16px;
+      white-space: normal;
+      padding-left: 16px;
+    }
+
+    &__button_main-accent {
+      @include button($main-gradient-colors);
+      border-radius: 0;
+      align-self: stretch;
+      margin-top: 60px;
+    }
+  }
 }
 </style>
