@@ -26,6 +26,20 @@
     </main>
 
 
+    <div class="carousel__dots">
+      <div
+          v-for="slider in sliders"
+          :key="slider.class"
+          :class="{active: slider.class === currentSlider.class}"
+      >
+        <img
+            src="../images/dot.svg"
+            alt="dot"
+        >
+      </div>
+    </div>
+
+
     <div
         class="carousel__arrow carousel__arrow_right"
         @click="selectNextSlide"
@@ -154,6 +168,18 @@ export default {
     transition: opacity 0.2s;
   }
 
+  &__dots {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    z-index: 1;
+
+    .active {
+      filter: $green-filter;
+    }
+  }
 
   &__arrow {
     padding: 0 28px 0 28px;
@@ -233,7 +259,7 @@ export default {
 
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
+@media screen and (min-width: 1052px) and (max-width: 1440px) {
   .carousel {
 
     &__arrow {
@@ -241,9 +267,6 @@ export default {
     }
 
     &__content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
       padding: 237px 64px 0 64px;
     }
 
@@ -260,13 +283,13 @@ export default {
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (min-width: 768px) and (max-width: 1052px) {
   .carousel {
     display: none;
   }
 }
 
-@media screen and (min-width: 0) and (max-width: 767px) {
+@media screen and (min-width: 0) and (max-width: 768px) {
   .carousel {
     display: none;
   }
