@@ -9,7 +9,7 @@
         @click="selectPreviousSlide"
     >
       <img
-          src="../images/arrow-left.svg"
+          src="../assets/images/arrow-left.svg"
           alt="arrow left"
       >
     </div>
@@ -28,12 +28,13 @@
 
     <div class="carousel__dots">
       <div
-          v-for="slider in sliders"
-          :key="slider.class"
+          v-for="(slider, index) in slides"
+          :key="index"
           :class="{active: slider.class === currentSlider.class}"
+          @click="selectSlide(index)"
       >
         <img
-            src="../images/dot.svg"
+            src="../assets/images/dot.svg"
             alt="dot"
         >
       </div>
@@ -45,7 +46,7 @@
         @click="selectNextSlide"
     >
       <img
-          src="../images/arrow-right.svg"
+          src="../assets/images/arrow-right.svg"
           alt="arrow right"
       >
     </div>
@@ -54,38 +55,20 @@
 </template>
 
 <script>
+import {slides} from "@/mock/slides.mock";
+
 export default {
   name: "TheCarousel",
   data() {
     return {
-      sliders: [{
-        class: "slider-free-parking",
-        titleText: "Бесплатная парковка",
-        captionText: "Оставляйте машину на платных городских парковках и разрешенных местах, не нарушая ПДД, а также в аэропортах.",
-        buttonClass: "button_green"
-      }, {
-        class: "slider-insurance",
-        titleText: "Страховка",
-        captionText: "Полная страховка автомобиля.",
-        buttonClass: "button_blue"
-      }, {
-        class: "slider-gasoline",
-        titleText: "Бензин",
-        captionText: "Полный бак на любой заправке города за наш счёт.",
-        buttonClass: "button_red"
-      }, {
-        class: "slider-service",
-        titleText: "Обслуживание",
-        captionText: "Автомобиль проходит еженедельное ТО.",
-        buttonClass: "button_purple"
-      }],
+      slides: slides,
       currentSliderIndex: 0,
       sliderIsChanging: false
     }
   },
   computed: {
     currentSlider() {
-      return this.sliders[this.currentSliderIndex];
+      return this.slides[this.currentSliderIndex];
     }
   },
   methods: {
@@ -93,7 +76,7 @@ export default {
       this.toggleSliderChangeAnimation();
       await this.waitTime();
       if (this.currentSliderIndex === 0) {
-        this.currentSliderIndex = this.sliders.length - 1;
+        this.currentSliderIndex = this.slides.length - 1;
       } else {
         --this.currentSliderIndex
       }
@@ -103,11 +86,18 @@ export default {
     async selectNextSlide() {
       this.toggleSliderChangeAnimation();
       await this.waitTime();
-      if (this.currentSliderIndex + 1 === this.sliders.length) {
+      if (this.currentSliderIndex + 1 === this.slides.length) {
         this.currentSliderIndex = 0
       } else {
         ++this.currentSliderIndex
       }
+      await this.waitTime();
+      this.toggleSliderChangeAnimation();
+    },
+    async selectSlide(index) {
+      this.toggleSliderChangeAnimation();
+      await this.waitTime();
+      this.currentSliderIndex = index;
       await this.waitTime();
       this.toggleSliderChangeAnimation();
     },
@@ -120,36 +110,31 @@ export default {
       });
     }
   }
-
 }
 </script>
 
-<style scoped lang="scss">
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
+<style lang="scss">
 .slider-change {
   opacity: 0;
 }
 
 .slider-free-parking {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-free-parking.png);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../assets/images/slider-free-parking.png);
   background-size: cover;
 }
 
 .slider-insurance {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-insurance.png);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../assets/images/slider-insurance.png);
   background-size: cover;
 }
 
 .slider-gasoline {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-gasoline.png);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../assets/images/slider-gasoline.png);
   background-size: cover;
 }
 
 .slider-service {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../images/slider-service.png);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(../assets/images/slider-service.png);
   background-size: cover;
 }
 
@@ -178,6 +163,10 @@ export default {
 
     .active {
       filter: $green-filter;
+    }
+
+    img {
+      cursor: pointer;
     }
   }
 
