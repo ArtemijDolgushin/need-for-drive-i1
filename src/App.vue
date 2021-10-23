@@ -1,16 +1,25 @@
 <template>
-<div>Need For Drive, Iteration 1</div>
+  <the-wrapper/>
 </template>
 
 <script>
+import TheWrapper from "@/components/TheWrapper";
+
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
+    TheWrapper
+  },
+  data() {
+    return {
+      sidebarMenuActive: false
+    }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+
 
 </style>
