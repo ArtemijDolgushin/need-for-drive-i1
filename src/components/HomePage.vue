@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import TheSidebar from "./TheSidebar";
-import ThePromo from "./ThePromo";
-import TheMenu from "./TheMenu";
-import TheCarousel from "./TheCarousel";
+import TheSidebar from "@/components/TheSidebar";
+import ThePromo from "@/components/ThePromo";
+import TheMenu from "@/components/TheMenu";
+import TheCarousel from "@/components/TheCarousel";
 
 export default {
-  name: "StartScreen",
+  name: "HomePage",
   components: {
     TheCarousel,
     TheMenu,
@@ -31,8 +31,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="scss">
 .start-screen {
   height: 100vh;
   width: 100%;

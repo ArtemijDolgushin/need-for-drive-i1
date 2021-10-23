@@ -1,18 +1,17 @@
 <template>
-<StartScreen></StartScreen>
+<home-page/>
 </template>
 
 <script>
-import StartScreen from "./components/StartScreen";
+import HomePage from "@/components/HomePage";
 
 export default {
   name: 'App',
   components: {
-    StartScreen
+    HomePage
   }
 }
 </script>
 
 <style lang="scss">
-@import "./scss/reset";
 </style>

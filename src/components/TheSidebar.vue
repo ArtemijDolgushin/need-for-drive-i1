@@ -4,14 +4,14 @@
   >
     <img
         class="sidebar__menu"
-        src="../images/menu_btn.svg"
+        src="../assets/images/menu_btn.svg"
         alt="open menu button"
         :style="sidebarMenuActive ? { display: 'none' } : {}"
         @click="toggleMenu"
     >
     <img
         class="sidebar__menu_close"
-        src="../images/menu_btn_back.svg"
+        src="../assets/images/menu_btn_back.svg"
         alt="close menu button"
         :style="sidebarMenuActive ? {} : { display: 'none' }"
         @click="toggleMenu"
@@ -51,11 +51,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
+<style lang="scss">
 .sidebar {
   background-color: $black;
   display: flex;
@@ -70,7 +66,7 @@ export default {
     cursor: pointer;
     z-index: 5;
 
-    &_close{
+    &_close {
       margin: 32px 16px 0 16px;
       width: 32px;
       height: 32px;
@@ -124,7 +120,7 @@ export default {
       margin: 32px 22px 0 22px;
       transform: scale(calc(42 / 32), 1);
 
-      &_close{
+      &_close {
         width: 43px;
       }
     }
@@ -143,7 +139,7 @@ export default {
       filter: invert(1);
       margin: 0;
 
-      &_close{
+      &_close {
         position: absolute;
         left: 16px;
         top: 16px;

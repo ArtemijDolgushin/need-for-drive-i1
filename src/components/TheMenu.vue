@@ -25,17 +25,17 @@
       <div class="menu__links">
         <img
             class="menu__icon"
-            src="../../../need-for-drive-i1/src/images/Telegram_white.svg"
+            src="../assets/images/Telegram_white.svg"
             alt="telegram icon"
         >
         <img
             class="menu__icon"
-            src="../../../need-for-drive-i1/src/images/Facebook_white.svg"
+            src="../assets/images/Facebook_white.svg"
             alt="facebook icon"
         >
         <img
             class="menu__icon"
-            src="../../../need-for-drive-i1/src/images/Instagram_white.svg"
+            src="../assets/images/Instagram_white.svg"
             alt="instagram icon"
         >
       </div>
@@ -53,12 +53,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
-
+<style lang="scss">
 .menu {
 
   ul {

@@ -6,7 +6,7 @@
       <span class="promo__map">
         <img
             class="promo__map-image"
-            src="../images/marker.svg"
+            src="../assets/images/marker.svg"
             alt="map marker"
         >
         Ульяновск
@@ -32,12 +32,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
-
+<style lang="scss">
 .promo {
   display: inline-flex;
   padding: 32px;
