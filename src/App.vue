@@ -1,17 +1,25 @@
 <template>
-<home-page/>
+  <the-wrapper/>
 </template>
 
 <script>
-import HomePage from "@/components/HomePage";
+import TheWrapper from "@/components/TheWrapper";
+
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HomePage
+    TheWrapper
+  },
+  data() {
+    return {
+      sidebarMenuActive: false
+    }
   }
 }
 </script>
 
 <style lang="scss">
+
+
 </style>
