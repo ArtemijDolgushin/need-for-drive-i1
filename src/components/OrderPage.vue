@@ -65,10 +65,6 @@ export default {
 
 <style scoped lang="scss">
 
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
 .order-page {
   display: inline-flex;
   flex-direction: column;
@@ -95,17 +91,19 @@ export default {
     margin-right: 9px;
   }
 
-  ul {
-    display: flex;
-    gap: 16px;
-    padding: 8px 0 8px 64px;
-    border-top: solid;
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: $gray-light;
+  &__progress-bar {
+    ul {
+      display: flex;
+      gap: 16px;
+      padding: 8px 0 8px 64px;
+      border-top: solid;
+      border-bottom: solid;
+      border-width: 1px;
+      border-color: $gray-light;
 
-    li {
-      @include roboto-text(700, 14px, $main-accent);
+      li {
+        @include roboto-text(700, 14px, $main-accent);
+      }
     }
   }
 
@@ -142,4 +140,6 @@ export default {
   }
 
 }
+
+
 </style>

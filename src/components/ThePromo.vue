@@ -16,8 +16,11 @@
       <span class="promo__title">Каршеринг</span>
       <span class="promo__logo_big">Need for drive</span>
       <span class="promo__caption">Поминутная аренда авто твоего города</span>
-      <button class="promo__button_main-accent">
-        <router-link to="/order">Забронировать</router-link>
+      <button
+          class="promo__button_main-accent"
+          @click="this.$router.push('/order')"
+      >
+        Забронировать
       </button>
     </main>
     <footer>
