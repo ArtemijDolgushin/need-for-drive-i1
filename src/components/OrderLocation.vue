@@ -9,11 +9,15 @@
               v-model="selectedCity"
               placeholder="Начните вводить город..."
           >
-          <div class="location__select">
+          <div
+              v-if="!validCitySelected"
+              class="location__select"
+          >
             <div
                 v-for="city in filteredCities"
                 :key="city"
                 class="location__option"
+                @click="selectedCity=city"
             >
               {{ city }}
             </div>
@@ -25,15 +29,21 @@
         <div class="location__input">
           <input
               id="place"
+              v-model="selectedPoint"
               placeholder="Начните вводить пункт..."
+              :disabled="!validCitySelected"
           >
-          <div class="location__select">
+          <div
+              v-if="!validPointSelected"
+              class="location__select"
+          >
             <div
-                v-for="place in filteredPlaces"
-                :key="place"
+                v-for="point in filteredPoints"
+                :key="point"
                 class="location__option"
+                @click="selectedPoint=point"
             >
-              {{ place }}
+              {{ point }}
             </div>
           </div>
         </div>
@@ -53,23 +63,46 @@ export default {
   data() {
     return {
       cities: [],
-      selectedCity: ''
+      points: [],
+      selectedCity: '',
+      selectedPoint: ''
     }
   },
   methods: {
     async getData() {
       let cities = await API.getCities();
+      let points = await API.getPoints();
       cities = cities.data;
+      points = points.data;
       this.cities = cities;
+      this.points = points;
+      console.log(points);
     }
   },
   computed: {
     filteredCities() {
-      return this.cities.map(city => city.name)
-          .filter(city => this.selectedCity && city.toLowerCase().startsWith(this.selectedCity.toLowerCase())  );
+      return this.cities
+          .filter(city =>
+              this.selectedCity &&
+              city.name.toLowerCase().startsWith(this.selectedCity.toLowerCase())
+          )
+          .map(city => city.name);
     },
-    filteredPlaces() {
-      return [];
+    filteredPoints() {
+      return this.points
+          .filter(point => point?.cityId && point.cityId.name === this.selectedCity)
+          .filter(point =>
+              this.selectedPoint &&
+              (point.address.toLowerCase().startsWith(this.selectedPoint.toLowerCase()) ||
+                  point.name.toLowerCase().startsWith(this.selectedPoint.toLowerCase()))
+          )
+          .map(point => point.address + ' ( ' + point.name + ' )');
+    },
+    validCitySelected() {
+      return this.filteredCities.length === 1 && this.filteredCities.includes(this.selectedCity)
+    },
+    validPointSelected() {
+      return this.filteredPoints.length === 1 && this.filteredPoints.includes(this.selectedPoint)
     }
   },
   created() {
@@ -114,6 +147,10 @@ export default {
     border: 1px none $gray;
     border-bottom-style: solid;
 
+    &:disabled {
+      opacity: 0.5;
+    }
+
     &:focus-visible {
       outline: none;
     }
@@ -123,13 +160,14 @@ export default {
     position: absolute;
     left: 0;
     background: white;
-    width: 100%;
+    width: auto;
     z-index: 2;
   }
 
   &__option {
     @include roboto-text(300, 14px, $black);
     padding: 5px;
+    cursor: pointer;
 
     &:hover {
       background-color: $gray-light;
@@ -140,12 +178,6 @@ export default {
     margin-top: 16px;
     width: 400px;
     height: auto;
-    transition: transform 0.5s;
-
-    &:hover {
-      transform: scale(2) translate(20%, 20%);
-    }
   }
 }
-
 </style>
