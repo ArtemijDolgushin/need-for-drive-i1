@@ -85,6 +85,7 @@ export default {
 
     &-disabled {
       opacity: 0;
+      transition: z-index 1s;
       z-index: -10;
     }
   }
