@@ -1,7 +1,7 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 import HomePage from "../views/HomePage";
-import OrderPage from "../components/OrderPage";
-import OrderLocation from "../components/OrderLocation";
+import OrderPage from "../views/OrderPage";
+import OrderLocation from "../views/OrderLocation";
 
 const routes = [
     {
