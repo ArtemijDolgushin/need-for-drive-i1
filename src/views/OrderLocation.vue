@@ -17,7 +17,7 @@
                 v-for="city in filteredCities"
                 :key="city"
                 class="location__option"
-                @click="selectedCity=city"
+                @click="selectedCity(city)"
             >
               {{ city }}
             </div>
@@ -41,7 +41,7 @@
                 v-for="point in filteredPoints"
                 :key="point"
                 class="location__option"
-                @click="selectedPoint=point"
+                @click="selectPoint(point)"
             >
               {{ point }}
             </div>
@@ -68,6 +68,7 @@ export default {
       selectedPoint: ''
     }
   },
+  emits: ['infoUpdated'],
   methods: {
     async getData() {
       let cities = await API.getCities();
@@ -76,7 +77,16 @@ export default {
       points = points.data;
       this.cities = cities;
       this.points = points;
-      console.log(points);
+    },
+    selectCity(city) {
+      this.selectedCity = city;
+    },
+    selectPoint(point) {
+      this.selectedPoint = point;
+      this.updateInfo();
+    },
+    updateInfo() {
+      this.$emit('infoUpdated', {name: 'location', value: this.selectedCity + ', \n' + this.selectedPoint})
     }
   },
   computed: {
@@ -90,13 +100,13 @@ export default {
     },
     filteredPoints() {
       return this.points
-          .filter(point => point?.cityId && point.cityId.name === this.selectedCity)
+          .filter(point => point.cityId && point.cityId.name === this.selectedCity)
           .filter(point =>
               this.selectedPoint &&
               (point.address.toLowerCase().startsWith(this.selectedPoint.toLowerCase()) ||
                   point.name.toLowerCase().startsWith(this.selectedPoint.toLowerCase()))
           )
-          .map(point => point.address + ' ( ' + point.name + ' )');
+          .map(point => point.address);
     },
     validCitySelected() {
       return this.filteredCities.length === 1 && this.filteredCities.includes(this.selectedCity)
@@ -112,15 +122,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-@import "../scss/variables";
-@import "../scss/fonts";
-@import "../scss/mixins";
-
 .location {
   display: inline-flex;
   flex-direction: column;
-  padding: 16px 192px 0 64px;
 
   ul {
     li {
@@ -131,7 +135,7 @@ export default {
 
   label {
     @include roboto-text(300, 14px, $black);
-    margin-top: 16px;
+    margin-bottom: 16px;
     margin-right: 16px;
   }
 
@@ -141,7 +145,7 @@ export default {
 
   input {
     display: inline;
-    margin-top: 16px;
+    margin-bottom: 16px;
     @include roboto-text(300, 14px, $black);
     padding: 0;
     border: 1px none $gray;
@@ -159,6 +163,7 @@ export default {
   &__select {
     position: absolute;
     left: 0;
+    top: 18px;
     background: white;
     width: auto;
     z-index: 2;
@@ -175,9 +180,71 @@ export default {
   }
 
   img {
-    margin-top: 16px;
     width: 400px;
     height: auto;
   }
 }
+
+@media screen and (min-width: 1440px) {
+  .location {
+    img {
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .location {
+
+    img {
+      width: 300px;
+      height: auto;
+    }
+  }
+}
+
+@media screen and (min-width: 0) and (max-width: 768px) {
+  .location {
+    ul {
+      li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    label {
+      margin-right: 0;
+    }
+
+    input {
+      display: inline;
+      margin-bottom: 16px;
+      @include roboto-text(300, 14px, $black);
+      padding: 0;
+      border: 1px none $gray;
+      border-bottom-style: solid;
+
+      &:disabled {
+        opacity: 0.5;
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    &__map-caption {
+      display: none;
+    }
+
+    img {
+      display: none;
+    }
+  }
+}
+
 </style>
