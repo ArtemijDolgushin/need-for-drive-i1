@@ -26,9 +26,14 @@ export default {
 
 <style lang="scss">
 
-html, body, #app{
+html, body, #app {
   height: 100%;
   width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .wrapper {
