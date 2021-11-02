@@ -16,7 +16,12 @@
       <span class="promo__title">Каршеринг</span>
       <span class="promo__logo_big">Need for drive</span>
       <span class="promo__caption">Поминутная аренда авто твоего города</span>
-      <button class="promo__button_main-accent">Забронировать</button>
+      <button
+          class="promo__button_main-accent"
+          @click="this.$router.push('/order')"
+      >
+        Забронировать
+      </button>
     </main>
     <footer>
       <span class="promo__copyright">© 2016-2019 «Need for drive»</span>

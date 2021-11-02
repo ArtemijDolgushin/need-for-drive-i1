@@ -25,6 +25,7 @@
   border-width: 0;
   text-align: center;
   user-select: none;
+  cursor: pointer;
 
   &:hover {
     background: get-gradient($gradient-colors, -10%);
@@ -34,5 +35,6 @@
   }
   &:disabled {
     background: $gray-light;
+    cursor: unset;
   }
 }
