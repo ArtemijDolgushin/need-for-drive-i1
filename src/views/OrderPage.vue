@@ -30,7 +30,7 @@
         >
           Назад
         </li>
-        <li>{{ currentStep }}</li>
+        <li>{{ currentStep.name }}</li>
       </ul>
 
 
@@ -38,14 +38,14 @@
     <b class="order-page__pad-right"/>
     <router-view
         class="order-page__content"
-        @infoUpdated="updateInfo"
+        @infoUpdated="handleInfoUpdate"
     />
     <div class="order-page__info">
       <div class="order-page__info__caption">
         Ваш заказ:
       </div>
       <div
-          v-for="item in info"
+          v-for="item in filteredDisplayedInfo"
           :key="item.name"
           class="order-page__info__item"
       >
@@ -60,9 +60,10 @@
       </div>
       <button
           class="order-page__info__button_main-accent"
+          :disabled="!nextStepAvailable"
           @click="moveStepForward"
       >
-        Заказать
+        {{ currentStep.buttonText }}
       </button>
     </div>
   </div>
@@ -70,7 +71,8 @@
 
 <script>
 import {steps} from "../mock/steps.mock";
-import {info} from "../mock/info.mock";
+import {infoTemplate} from "../mock/info.mock";
+import {orderTemplate} from "../mock/order.mock";
 
 export default {
   name: "OrderPage",
@@ -78,7 +80,9 @@ export default {
     return {
       steps: steps,
       currentStepIndex: 0,
-      info: info,
+      nextStepAvailable: false,
+      displayedInfo: infoTemplate,
+      order: orderTemplate,
       selectedCity: '',
       selectedPoint: ''
     }
@@ -86,17 +90,33 @@ export default {
   computed: {
     currentStep() {
       return this.steps[this.currentStepIndex];
+    },
+    filteredDisplayedInfo() {
+      return this.displayedInfo.filter(info => info.value);
     }
   },
   methods: {
     moveStepForward() {
-      if (this.currentStepIndex < this.steps.length - 1) this.currentStepIndex++;
+      //if (this.currentStepIndex < this.steps.length - 1) this.currentStepIndex++;
+      this.nextStepAvailable = false;
     },
     moveStepBack() {
       if (this.currentStepIndex > 0) this.currentStepIndex--;
     },
-    updateInfo(newInfo) {
-      this.info[newInfo.name].value = newInfo.value;
+    handleInfoUpdate(updatedInfo) {
+      switch (updatedInfo.name) {
+        case 'location':
+          this.handleLocationUpdate(updatedInfo.value);
+          break;
+      }
+    },
+    handleLocationUpdate(location) {
+      this.displayedInfo = infoTemplate;
+      this.displayedInfo[0].value = location.cityId.name + ',\n' + location.address;
+      this.order = orderTemplate;
+      this.order.cityId.id = location.cityId.id;
+      this.order.pointId.id = location.id;
+      this.nextStepAvailable = true;
     }
   }
 }
@@ -210,6 +230,7 @@ export default {
 
     &__caption {
       @include roboto-text(500, 18px, $black);
+      align-self: flex-end;
     }
 
     &__item {
@@ -231,6 +252,7 @@ export default {
     &__value {
       text-align: right;
       color: $gray;
+      white-space: pre;
     }
 
     &__price {

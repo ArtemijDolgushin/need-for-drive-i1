@@ -7,6 +7,7 @@
           <input
               id="city"
               v-model="selectedCity"
+              autocomplete="off"
               placeholder="Начните вводить город..."
           >
           <div
@@ -15,11 +16,11 @@
           >
             <div
                 v-for="city in filteredCities"
-                :key="city"
+                :key="city.name"
                 class="location__option"
-                @click="selectedCity(city)"
+                @click="selectCity(city)"
             >
-              {{ city }}
+              {{ city.name }}
             </div>
           </div>
         </div>
@@ -30,6 +31,7 @@
           <input
               id="place"
               v-model="selectedPoint"
+              autocomplete="off"
               placeholder="Начните вводить пункт..."
               :disabled="!validCitySelected"
           >
@@ -39,11 +41,11 @@
           >
             <div
                 v-for="point in filteredPoints"
-                :key="point"
+                :key="point.address"
                 class="location__option"
                 @click="selectPoint(point)"
             >
-              {{ point }}
+              {{ point.address }}
             </div>
           </div>
         </div>
@@ -73,20 +75,19 @@ export default {
     async getData() {
       let cities = await API.getCities();
       let points = await API.getPoints();
-      cities = cities.data;
-      points = points.data;
-      this.cities = cities;
-      this.points = points;
+      this.cities = cities.data;
+      this.points = points.data;
     },
     selectCity(city) {
-      this.selectedCity = city;
+      this.selectedCity = city.name;
+      this.selectedPoint = '';
     },
     selectPoint(point) {
-      this.selectedPoint = point;
-      this.updateInfo();
+      this.selectedPoint = point.address;
+      this.updateInfo(point);
     },
-    updateInfo() {
-      this.$emit('infoUpdated', {name: 'location', value: this.selectedCity + ', \n' + this.selectedPoint})
+    updateInfo(point) {
+      this.$emit('infoUpdated', {name: 'location', value: point});
     }
   },
   computed: {
@@ -95,8 +96,7 @@ export default {
           .filter(city =>
               this.selectedCity &&
               city.name.toLowerCase().startsWith(this.selectedCity.toLowerCase())
-          )
-          .map(city => city.name);
+          );
     },
     filteredPoints() {
       return this.points
@@ -105,14 +105,13 @@ export default {
               this.selectedPoint &&
               (point.address.toLowerCase().startsWith(this.selectedPoint.toLowerCase()) ||
                   point.name.toLowerCase().startsWith(this.selectedPoint.toLowerCase()))
-          )
-          .map(point => point.address);
+          );
     },
     validCitySelected() {
-      return this.filteredCities.length === 1 && this.filteredCities.includes(this.selectedCity)
+      return this.filteredCities.length === 1 && this.filteredCities.every(city => city.name === this.selectedCity)
     },
     validPointSelected() {
-      return this.filteredPoints.length === 1 && this.filteredPoints.includes(this.selectedPoint)
+      return this.filteredPoints.length === 1 && this.filteredPoints.every(point => point.address === this.selectedPoint)
     }
   },
   created() {
