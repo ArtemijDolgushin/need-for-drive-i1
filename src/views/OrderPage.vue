@@ -75,9 +75,9 @@
 </template>
 
 <script>
-import {steps} from "../mock/steps.mock";
-import {infoTemplate} from "../mock/info.mock";
-import {orderTemplate} from "../mock/order.mock";
+import {steps} from "@/mock/steps.mock";
+import {infoTemplate} from "@/mock/info.mock";
+import {orderTemplate} from "@/mock/order.mock";
 
 export default {
   name: "OrderPage",
