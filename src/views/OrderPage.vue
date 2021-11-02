@@ -9,7 +9,9 @@
       >
       Ульяновск
     </span>
+
     <b class="order-page__pad-left"/>
+
     <div class="order-page__progress-bar">
       <ul>
         <li>Местоположение</li>
@@ -35,11 +37,14 @@
 
 
     </div>
+
     <b class="order-page__pad-right"/>
+
     <router-view
         class="order-page__content"
         @infoUpdated="handleInfoUpdate"
     />
+
     <div class="order-page__info">
       <div class="order-page__info__caption">
         Ваш заказ:
@@ -82,9 +87,7 @@ export default {
       currentStepIndex: 0,
       nextStepAvailable: false,
       displayedInfo: infoTemplate,
-      order: orderTemplate,
-      selectedCity: '',
-      selectedPoint: ''
+      order: orderTemplate
     }
   },
   computed: {
@@ -241,9 +244,6 @@ export default {
       align-items: flex-end;
     }
 
-    &__name {
-    }
-
     &__dots {
       border-bottom: $gray 1px dotted;
       width: 50%;
@@ -282,28 +282,15 @@ export default {
   .order-page {
     display: flex;
     flex-direction: column;
-    width: 100%;
-
 
     &__logo {
-      @include roboto-text(700, 30px, $main-accent);
-      display: inline-flex;
-      align-items: center;
       justify-content: flex-end;
       padding-top: 16px;
       padding-right: 16px;
     }
 
     &__map {
-      @include roboto-text(400, 14px, $gray);
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-end;
       padding-right: 16px;
-    }
-
-    &__map-image {
-      margin-right: 9px;
     }
 
     &__pad-left {
@@ -332,29 +319,13 @@ export default {
     }
 
     &__content {
-      padding-top: 32px;
       padding-left: 8px;
     }
 
     &__info {
       border: none;
       padding: 32px 8px 0 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
       min-width: 0;
-
-      &__caption {
-        align-self: flex-end;
-        @include roboto-text(500, 18px, $black);
-      }
-
-      &__price {
-      }
-
-      &__item {
-      }
 
       &__button_main-accent {
         border-radius: 0;

@@ -35,5 +35,6 @@
   }
   &:disabled {
     background: $gray-light;
+    cursor: unset;
   }
 }

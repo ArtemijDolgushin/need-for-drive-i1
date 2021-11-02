@@ -188,7 +188,6 @@ export default {
   .location {
     img {
       width: auto;
-      height: auto;
     }
   }
 }
@@ -198,10 +197,8 @@ export default {
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .location {
-
     img {
       width: 300px;
-      height: auto;
     }
   }
 }
@@ -217,23 +214,6 @@ export default {
 
     label {
       margin-right: 0;
-    }
-
-    input {
-      display: inline;
-      margin-bottom: 16px;
-      @include roboto-text(300, 14px, $black);
-      padding: 0;
-      border: 1px none $gray;
-      border-bottom-style: solid;
-
-      &:disabled {
-        opacity: 0.5;
-      }
-
-      &:focus-visible {
-        outline: none;
-      }
     }
 
     &__map-caption {
