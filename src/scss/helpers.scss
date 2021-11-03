@@ -1,0 +1,12 @@
+
+.loading-message {
+  @include roboto-text(500, 18px, $main-accent);
+}
+
+.error-message {
+  @include roboto-text(500, 18px, $error);
+}
+
+.disabled {
+  display: none;
+}

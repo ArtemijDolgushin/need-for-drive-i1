@@ -1,5 +1,17 @@
 <template>
   <div class="location">
+    <div
+        class="loading-message"
+        :class="{disabled: !loading}"
+    >
+      Идёт загрузка данных...
+    </div>
+    <div
+        class="error-message"
+        :class="{disabled: !error}"
+    >
+      Что-то пошло не так...
+    </div>
     <ul>
       <li>
         <label for="city">Город:</label>
@@ -67,14 +79,24 @@ export default {
       cities: [],
       points: [],
       selectedCity: '',
-      selectedPoint: ''
+      selectedPoint: '',
+      loading: false,
+      error: false
     }
   },
   emits: ['infoUpdated'],
   methods: {
     async getData() {
-      this.cities = await API.getCities();
-      this.points = await API.getPoints();
+      try {
+        this.loading = true;
+        this.cities = await API.getCities();
+        this.points = await API.getPoints();
+      } catch (e) {
+        this.error = true;
+        console.log(e);
+      } finally {
+        this.loading = false;
+      }
     },
     selectCity(city) {
       this.selectedCity = city.name;

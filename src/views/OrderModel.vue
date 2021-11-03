@@ -1,5 +1,17 @@
 <template>
   <div class="model">
+    <div
+        class="loading-message"
+        :class="{disabled: !loading}"
+    >
+      Идёт загрузка данных...
+    </div>
+    <div
+        class="error-message"
+        :class="{disabled: !error}"
+    >
+      Что-то пошло не так...
+    </div>
     <div class="model__categories">
       <div
           v-for="category in carCategories"
@@ -74,14 +86,24 @@ export default {
       pages: [],
       selectedPage: 0,
       carCategories: [],
-      selectedCategory: 'Все модели'
+      selectedCategory: 'Все модели',
+      loading: false,
+      error: false
     }
   },
   methods: {
     async getData() {
+      try {
+        this.loading = true;
         await this.getCategories();
         await this.getPageCount();
         await this.getCars();
+      } catch (e) {
+        this.error = true;
+        console.log('aaa', e)
+      } finally {
+        this.loading = false;
+      }
     },
     async getCategories() {
       this.carCategories = await API.getCarCategories();
