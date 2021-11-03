@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import {API} from "../API";
+import {API} from "@/API";
 
 export default {
   name: "OrderLocation",
@@ -73,10 +73,8 @@ export default {
   emits: ['infoUpdated'],
   methods: {
     async getData() {
-      let cities = await API.getCities();
-      let points = await API.getPoints();
-      this.cities = cities.data;
-      this.points = points.data;
+      this.cities = await API.getCities();
+      this.points = await API.getPoints();
     },
     selectCity(city) {
       this.selectedCity = city.name;
