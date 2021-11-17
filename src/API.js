@@ -34,6 +34,11 @@ export class API {
         return result.data;
     }
 
+    static async getCarById(id) {
+        const result = await this.get(`/car/${id}`);
+        return result.data;
+    }
+
     static getCarThumbnail(path) {
         switch (path.charAt(0)) {
             case 'd':
