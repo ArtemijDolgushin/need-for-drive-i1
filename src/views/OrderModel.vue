@@ -1,17 +1,5 @@
 <template>
   <div class="model">
-    <div
-        class="loading-message"
-        :class="{disabled: !loading}"
-    >
-      Идёт загрузка данных...
-    </div>
-    <div
-        class="error-message"
-        :class="{disabled: !error}"
-    >
-      Что-то пошло не так...
-    </div>
     <div class="model__categories">
       <div
           v-for="category in carCategories"
@@ -34,18 +22,22 @@
       </div>
     </div>
 
-    <div class="model__cars">
+    <div
+        id="pages"
+        class="model__cars"
+    >
       <div
           v-for="(page, index) in pages"
           :key="index"
           class="model__page"
-          :class="{disabled: selectedPage !== index}"
+          :class="{disabled: selectedPageIndex !== index}"
       >
         <div
-            v-for="car in page.cars"
-            :key="car.name"
+            v-for="(car, index) in page.cars"
+            :key="index"
             class="model__car"
-            :class="{disabled: carMatchesCategory(car.categoryId.name)}"
+            :class="{disabled: !carMatchesCategory(car), active: car.id === selectedCarId}"
+            @click="selectCar(car)"
         >
           <span class="model__name">
             {{ car.name }}
@@ -53,23 +45,53 @@
           <span class="model__price">
             {{ car.priceMin }} - {{ car.priceMax }} ₽
           </span>
-          <img
-              class="model__image"
-              src="#"
-          >
+          <div class="model__image">
+            <img
+                :src="getCarThumbnail(car.thumbnail.path)"
+                :alt="car.name"
+                @error="handleImageError"
+            >
+          </div>
+
         </div>
       </div>
     </div>
 
-    <div class="model__pagination">
-      <div @click="selectPreviousPage">
-        назад
-      </div>
-      <div>{{ selectedPage + 1 }}</div>
-      <div @click="selectNextPage">
-        вперед
-      </div>
+    <div
+        class="loading-message"
+        :class="{disabled: !loading}"
+    >
+      Идёт загрузка данных...
     </div>
+    <div
+        class="error-message"
+        :class="{disabled: !error}"
+    >
+      Что-то пошло не так...
+    </div>
+
+    <ul
+        class="model__pagination"
+        :class="{disabled: loading}"
+    >
+      <li
+          :class="{disabled: selectedPageNumber === 1}"
+          class="model__page-change"
+          @click="selectPreviousPage"
+      >
+        «
+      </li>
+      <li class="model__selected">
+        {{ selectedPageNumber }}
+      </li>
+      <li
+          :class="{disabled: selectedPageNumber === pagesCount}"
+          class="model__page-change"
+          @click="selectNextPage"
+      >
+        »
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -84,14 +106,25 @@ export default {
       carsPerPage: 12,
       pagesCount: NaN,
       pages: [],
-      selectedPage: 0,
+      selectedPageIndex: 0,
       carCategories: [],
       selectedCategory: 'Все модели',
+      selectedCarId: '',
       loading: false,
       error: false
     }
   },
+  emits: ['infoUpdated'],
+  computed: {
+    selectedPageNumber() {
+      return this.selectedPageIndex + 1;
+    }
+  },
   methods: {
+    selectCar(car) {
+      this.selectedCarId = car.id;
+      this.updateInfo(car);
+    },
     async getData() {
       try {
         this.loading = true;
@@ -115,9 +148,9 @@ export default {
       for (let i = 0; i < this.pagesCount; i++) this.pages.push({empty: true, cars: []});
     },
     async getCars() {
-      if (this.pages[this.selectedPage].empty) {
-        this.pages[this.selectedPage].cars = await API.getCars(this.carsPerPage, this.selectedPage);
-        this.pages[this.selectedPage].empty = false;
+      if (this.pages[this.selectedPageIndex].empty) {
+        this.pages[this.selectedPageIndex].cars = await API.getCars(this.carsPerPage, this.selectedPageIndex);
+        this.pages[this.selectedPageIndex].empty = false;
       }
     },
     selectCategory(category) {
@@ -127,15 +160,29 @@ export default {
       return API.getCarThumbnail(path);
     },
     selectPreviousPage() {
-      if (this.selectedPage > 0) this.selectedPage--;
+      if (this.selectedPageIndex > 0) this.selectedPageIndex--;
     },
-    selectNextPage() {
-      if (this.selectedPage < this.pages.length - 1) this.selectedPage++;
-      this.getCars();
+    async selectNextPage() {
+      if (this.selectedPageIndex < this.pages.length - 1) this.selectedPageIndex++;
+      try {
+        this.loading = true;
+        await this.getCars();
+      } catch (e) {
+        this.error = true;
+        console.log('bbb', e);
+      } finally {
+        this.loading = false;
+      }
     },
-    carMatchesCategory(carCategory) {
-      if (this.selectedCategory === 'Все модели') return true;
-      return carCategory === this.selectedCategory;
+    carMatchesCategory(car) {
+      if (this.selectedCategory === 'Все модели' || !car.categoryId) return true;
+      return car.categoryId.name === this.selectedCategory;
+    },
+    handleImageError(e) {
+      e.target.src = require('@/assets/images/car_no_image.png');
+    },
+    updateInfo(car) {
+      this.$emit('infoUpdated', {name: 'model', value: car});
     }
   },
   created() {
@@ -149,7 +196,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  padding-bottom: 64px;
+  padding-right: 16px;
 
   &__categories {
     display: flex;
@@ -213,6 +260,11 @@ export default {
   &__page {
     display: flex;
     flex-wrap: wrap;
+
+    &.disabled {
+      height: 0;
+      overflow: hidden;
+    }
   }
 
   &__car {
@@ -221,11 +273,15 @@ export default {
     flex-direction: column;
     padding: 16px;
 
+    &.disabled {
+      display: none;
+    }
+
     &:hover {
       border-color: $gray;
     }
 
-    &:active {
+    &.active, &:active {
       border-color: $main-accent;
       box-shadow: 0 0 5px $main-accent;
     }
@@ -244,6 +300,40 @@ export default {
     margin: 36px 0 0 80px;
     width: 256px;
     height: 116px;
+    display: flex;
+    justify-content: flex-end;
+
+    img {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    @include roboto-text(400, 20px, $black);
+    width: 100%;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+    margin: 5px 0 5px 0;
+
+    &.disabled {
+      display: none;
+    }
+  }
+
+  &__selected {
+    cursor: default;
+  }
+
+  &__page-change {
+    @include roboto-text(400, 30px, $black);
+    cursor: pointer;
+
+    &.disabled {
+      visibility: hidden;
+    }
   }
 }
 
