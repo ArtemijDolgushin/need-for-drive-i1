@@ -1,7 +1,8 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import HomePage from "../views/HomePage";
-import OrderPage from "../views/OrderPage";
-import OrderLocation from "../views/OrderLocation";
+import HomePage from "@/views/HomePage";
+import OrderPage from "@/views/OrderPage";
+import OrderLocation from "@/views/OrderLocation";
+import OrderModel from "@/views/OrderModel";
 
 const routes = [
     {
@@ -16,12 +17,17 @@ const routes = [
         children: [
             {
                 path: '',
-                redirect: '/order/location'
+                redirect: '/order/model'
             },
             {
                 path: 'location',
                 name: 'OrderLocation',
                 component: OrderLocation
+            },
+            {
+                path: 'model',
+                name: 'OrderModel',
+                component: OrderModel
             }
         ]
     }

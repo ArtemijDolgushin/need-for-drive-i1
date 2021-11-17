@@ -87,7 +87,9 @@ export default {
       currentStepIndex: 0,
       nextStepAvailable: false,
       displayedInfo: infoTemplate,
-      order: orderTemplate
+      order: orderTemplate,
+      minPrice: NaN,
+      maxPrice: NaN
     }
   },
   computed: {
@@ -111,6 +113,9 @@ export default {
         case 'location':
           this.handleLocationUpdate(updatedInfo.value);
           break;
+        case 'model':
+          this.handleModelUpdate(updatedInfo.value);
+          break;
       }
     },
     handleLocationUpdate(location) {
@@ -119,7 +124,28 @@ export default {
       this.order = orderTemplate;
       this.order.cityId.id = location.cityId.id;
       this.order.pointId.id = location.id;
+      this.minPrice = NaN;
+      this.maxPrice = NaN;
       this.nextStepAvailable = true;
+    },
+    handleModelUpdate(car) {
+      const tempLocationInfo = this.displayedInfo[0].value;
+      const tempCityId = this.order.cityId.id;
+      const tempPointId = this.order.pointId.id;
+      this.resetOrderInfo();
+      this.displayedInfo[0].value = tempLocationInfo;
+      this.order.cityId.id = tempCityId;
+      this.order.pointId.id = tempPointId;
+
+      this.displayedInfo[1].value = car.name;
+      this.order.carId.id = car.id;
+      this.minPrice = car.priceMin;
+      this.maxPrice = car.priceMax;
+      this.nextStepAvailable = true;
+    },
+    resetOrderInfo() {
+      this.displayedInfo = infoTemplate;
+      this.order = orderTemplate;
     }
   }
 }
